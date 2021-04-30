@@ -1,11 +1,4 @@
-//
-//  usermod_touchbrightness.h
-//  github.com/aircoookie/WLED
-//
-//  Created by Justin Kühner on 14.09.2020.
-//  Copyright © 2020 NeariX. All rights reserved.
-//  https://github.com/NeariX67/
-//  Discord: @NeariX#4799
+
 
 
 #pragma once
