@@ -11,13 +11,13 @@ This is how you dropdown.
 </details>
 
 <details>
-<summary>How do I dropdown?</summary>
+<summary>Software</summary>
 <br>
 This is how you dropdown.
 </details>
 
 <details>
-<summary>How do I dropdown?</summary>
+<summary>Hardware</summary>
 <br>
 This is how you dropdown.
 </details>
@@ -35,13 +35,13 @@ This is how you dropdown.
 </details>
 
 <details>
-<summary>How do I dropdown?</summary>
+<summary>Software</summary>
 <br>
 This is how you dropdown.
 </details>
 
 <details>
-<summary>How do I dropdown?</summary>
+<summary>Hardware</summary>
 <br>
 This is how you dropdown.
 </details>
@@ -58,13 +58,13 @@ This is how you dropdown.
 </details>
 
 <details>
-<summary>How do I dropdown?</summary>
+<summary>Software</summary>
 <br>
 This is how you dropdown.
 </details>
 
 <details>
-<summary>How do I dropdown?</summary>
+<summary>Hardware</summary>
 <br>
 This is how you dropdown.
 </details>
