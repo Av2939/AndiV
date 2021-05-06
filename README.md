@@ -28,9 +28,43 @@ This is how you dropdown.
 
 <img src="README_Images/Wearable_Git.gif" width ="500" > <img src="README_Images/Wearable_Git.gif" width ="500" >
 
+<details>
+<summary>Description</summary>
+<br>
+This is how you dropdown.
+</details>
 
+<details>
+<summary>How do I dropdown?</summary>
+<br>
+This is how you dropdown.
+</details>
+
+<details>
+<summary>How do I dropdown?</summary>
+<br>
+This is how you dropdown.
+</details>
 
 
 ## Smart Night Stand Lamp
 
 <img src="README_Images/Wearable_Git.gif" width ="500" > <img src="README_Images/Wearable_Git.gif" width ="500" >
+
+<details>
+<summary>Description</summary>
+<br>
+This is how you dropdown.
+</details>
+
+<details>
+<summary>How do I dropdown?</summary>
+<br>
+This is how you dropdown.
+</details>
+
+<details>
+<summary>How do I dropdown?</summary>
+<br>
+This is how you dropdown.
+</details>
