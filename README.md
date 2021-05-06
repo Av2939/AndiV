@@ -2,7 +2,7 @@
 
 ## Wearable Motion Tracking to Prevent Injury
 ![](README_Images/Wearable_Git.gif)
-<imgsrc="README_Images/Wearable_Git.gif" width ="100">
+<img src="README_Images/Wearable_Git.gif" width ="100" >
 ## Gas Alert
 
 
