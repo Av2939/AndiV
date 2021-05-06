@@ -1,8 +1,8 @@
 # Andi_V-Projects
 
 ## Wearable Motion Tracking to Prevent Injury
-[comment]: #![](README_Images/Wearable_Git.gif)
-<img src="README_Images/Wearable_Git.gif" width ="100" >
+
+<img src="README_Images/Wearable_Git.gif" width ="400" >
 ## Gas Alert
 
 
