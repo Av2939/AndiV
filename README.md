@@ -30,7 +30,7 @@ This is how you dropdown.
 
 <img src="README_Images/gas_alert.PNG" width ="500" > <img src="README_Images/notification.PNG" width ="300" >
 
-<details>
+<details open>
 <summary>Description</summary>
 <br>
 A smart home device that uses a natural gas sensor and an ESP-32 (microcontroller) to alert a user on a smartphone that there is a gas leak present.
@@ -55,7 +55,7 @@ This is how you dropdown.
 
 <img src="README_Images/nightstandcolors.gif" width ="500" > <img src="README_Images/handwave.gif" width ="500" >
 
-<details>
+<details open>
 <summary>Description</summary>
 <br>
 A reprogrammable nightstand lamp that is built upon the open sourced WLED repository giving it IoT capabilities and modified by me to also be controlled through an Ultra Sonic sensor that allows a hand wave to turn the lamp on and off.
