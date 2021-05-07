@@ -49,7 +49,7 @@ This is how you dropdown.
 
 ## Smart Night Stand Lamp
 
-<img src="README_Images/nightstandcolors.gif" width ="500" > <img src="README_Images/Wearable_Git.gif" width ="500" >
+<img src="README_Images/nightstandcolors.gif" width ="500" > <img src="README_Images/handwave.gif" width ="500" >
 
 <details>
 <summary>Description</summary>
