@@ -4,7 +4,7 @@
 
 <img src="README_Images/modules.PNG" width ="500" > <img src="README_Images/Wearable_Git.gif" width ="500" >
 
-<details>
+<details open>
 <summary>Description</summary>
 <br>
 Based on a research paper, my team and I built wearable modules consisting of an IMU (MPU 6050) and an ESP-32 (microcontroller) that sent precise motion data over Bluetooth in the form of quaternions in real time (40 Samples/s). 
