@@ -1,4 +1,4 @@
-//The void gui is to stop the ui from moving with the camera
+
 void SetupButtons(){
   
   noStroke();
@@ -44,7 +44,7 @@ void SetupButtons(){
 
 
 
-
+//The void gui is to stop the ui from moving with the camera
 void gui() {
    
   hint(DISABLE_DEPTH_TEST);

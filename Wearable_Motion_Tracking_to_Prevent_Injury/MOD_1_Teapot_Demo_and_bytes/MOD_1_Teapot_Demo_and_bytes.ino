@@ -1,3 +1,5 @@
+//This is for MOD 1 (Thigh)
+//The MAC address for this ESP-32 board is: 7C:9E:BD:D3:02:C4
 
 
 // I2Cdev and MPU6050 must be installed as libraries, or else the .cpp/.h files
@@ -6,14 +8,14 @@
 #include <esp_now.h>
 #include <WiFi.h>
 #include "MPU6050_6Axis_MotionApps_V6_12.h"
-
-#if I2CDEV_IMPLEMENTATION == I2CDEV_ARDUINO_WIRE
 #include "Wire.h"
-#endif
+
+
 
 int analogPin = A13;
 uint8_t broadcastAddress[] = {0x84, 0xCC, 0xA8, 0x12, 0x30, 0x5C};
 char val;
+
 typedef struct struct_message {
    uint8_t teapotPacket[8];  
    float BATT; 
@@ -28,7 +30,7 @@ typedef struct struct_Message {
 } struct_Message;
 
 
-// Create a struct_message called myData
+// Creates a struct_message called myData that sends data to Mod 2 (Spine)
 struct_message myData;
 
 
@@ -36,8 +38,7 @@ struct_Message sendData;
 
 // callback function that will be executed when data is received
 void OnDataSent(const uint8_t *mac_addr, esp_now_send_status_t status) {
-  //Serial.print("\r\nLast Packet Send Status:\t");
-  //Serial.println(status == ESP_NOW_SEND_SUCCESS ? "Delivery Success" : "Delivery Fail");
+ 
 }
 void OnDataRecv(const uint8_t * mac, const uint8_t *incomingData, int len) {
   memcpy(&sendData, incomingData, sizeof(sendData));
@@ -102,7 +103,7 @@ void dmpDataReady() {
 
 void setup() {
 //----------------WIFI and BT initalizng stuff--------------------------------
-pinMode(32, OUTPUT);
+pinMode(32, OUTPUT); //Pin 32 is the pin associated with the built in led light in this esp-32 board
 Serial.begin(115200);
    // Set device as a Wi-Fi Station
   WiFi.mode(WIFI_STA);
@@ -141,17 +142,9 @@ Serial.begin(115200);
   Fastwire::setup(400, true);
 #endif
 
-  // initialize serial communication
-  // (115200 chosen because it is required for Teapot Demo output, but it's
-  // really up to you depending on your project)
+  //Allows to reaad the motion data through direct usb connection for debugging purposes
   Serial.begin(115200);
-  //while (!Serial); // wait for Leonardo enumeration, others continue immediately
-
-  // NOTE: 8MHz or slower host processors, like the Teensy @ 3.3V or Arduino
-  // Pro Mini running at 3.3V, cannot handle this baud rate reliably due to
-  // the baud timing being too misaligned with processor ticks. You must use
-  // 38400 or slower in these cases, or use some kind of external separate
-  // crystal solution for the UART timer.
+  
 
   // initialize device
   Serial.println(F("Initializing I2C devices..."));
@@ -162,17 +155,12 @@ Serial.begin(115200);
   Serial.println(F("Testing device connections..."));
   Serial.println(mpu.testConnection() ? F("MPU6050 connection successful") : F("MPU6050 connection failed"));
 
-  // wait for ready
-  /*Serial.println(F("\nSend any character to begin DMP programming and demo: "));
-  while (Serial.available() && Serial.read()); // empty buffer
-  while (!Serial.available());                 // wait for data
-  while (Serial.available() && Serial.read()); // empty buffer again
-*/
+ 
   // load and configure the DMP
   Serial.println(F("Initializing DMP..."));
   devStatus = mpu.dmpInitialize();
 
-  // supply your own gyro offsets here, scaled for min sensitivity
+  // supply your own gyro offsets here, scaled for min sensitivity. On the MPU library there should be some example code to give the values for calibration
   mpu.setXGyroOffset(51);
   mpu.setYGyroOffset(8);
   mpu.setZGyroOffset(21);
@@ -204,10 +192,7 @@ Serial.begin(115200);
     // get expected DMP packet size for later comparison
     packetSize = mpu.dmpGetFIFOPacketSize();
   } else {
-    // ERROR!
-    // 1 = initial memory load failed
-    // 2 = DMP configuration updates failed
-    // (if it's going to break, usually the code will be 1)
+    
     Serial.print(F("DMP Initialization failed (code "));
     Serial.print(devStatus);
     Serial.println(F(")"));
@@ -224,15 +209,13 @@ Serial.begin(115200);
 // ================================================================
 
 void loop() {
-  // if programming failed, don't try to do anything
- // if (!dmpReady) return;
-  // read a packet from FIFO
+ 
   if (mpu.dmpGetCurrentFIFOPacket(fifoBuffer)) { // Get the Latest packet 
 
 
 
 #ifdef OUTPUT_TEAPOT
-    
+    //This is where the local motion data gets put into the struct and then transmitted to Module 2 via ESP-NOW
     myData.teapotPacket[0] = fifoBuffer[0];
     myData.teapotPacket[1] = fifoBuffer[1];
     myData.teapotPacket[2] = fifoBuffer[4];
@@ -243,35 +226,15 @@ void loop() {
     myData.teapotPacket[7] = fifoBuffer[13];
    
    
-  /*
-   myData.teapotPacket[0] = teapotPacket[0];
-   myData.teapotPacket[1] = teapotPacket[1];
-   myData.teapotPacket[2] = teapotPacket[2];
-   myData.teapotPacket[3] = teapotPacket[3];
-   myData.teapotPacket[4] = teapotPacket[4];
-   myData.teapotPacket[5] = teapotPacket[5];
-   myData.teapotPacket[6] = teapotPacket[6];
-   myData.teapotPacket[7] = teapotPacket[7];
-   myData.teapotPacket[8] = teapotPacket[8];
-   myData.teapotPacket[9] = teapotPacket[9];
-   myData.teapotPacket[10] = teapotPacket[10];
-   myData.teapotPacket[11] = teapotPacket[11];
-   myData.teapotPacket[12] = teapotPacket[12];
-   myData.teapotPacket[13] = teapotPacket[13];
-   
-   */
-   //myData.teapotPacket[14] = teapotPacket[14];
-   //Serial.write(myData.teapotPacket,14);
+  
    delay(25);
+  //This line sends the struct to Mod 2 via ESP NOW
    esp_err_t result = esp_now_send(broadcastAddress, (uint8_t *) &myData, sizeof(myData));
 #endif
 
-    // blink LED to indicate activity
-    //blinkState = !blinkState;
-    //digitalWrite(LED_PIN, blinkState);
     
   }
-
+//Battery and LED control
 myData.BATT = analogRead(analogPin);
 Serial.println(val);
   
@@ -292,7 +255,7 @@ else{
 }
   
   
-  // Send message via ESP-NOW
+
   
   
 }

@@ -81,31 +81,11 @@ void Shoulders(){
   
 }
 
-//maybe if i make seperate axis for the hip it might work
+
 void Hip(){
   pushMatrix();
   translate(1170,height/2,250);
- //rotateX(radians(euler[0])*(180/PI));
- //rotateY(-(radians(euler[1])*(180/PI)));
-
- //quat.set(q[0], q[1], q[2], q[3]);
-  //quat.set(q[0], 0, 0, q[3]);
-  //float[] axis = quat.toAxisAngle();
-// rotate(axis[0], -axis[2], axis[3], -axis[1]); // Weirdly enough, this kind of works however after 2.7 to -2.5 it bugs out
- //So the rotate y works from 0 to 2pi, the values given from the mpu 6050 hower go negative.....
- //So from some testing, axis[0]*axis[3] works from 0.0 to 2.5, 
-                                                  //2.5 to 0.0, 
-                                                  //0.0 to -2.5, 
-                                                  //-2.5 to 0.0, 
-                                                  //0.0 to 2.5
  
- 
- //println("  Axis 0&3:  "+axis[0]*axis[3]); //testing
- 
- //rotateZ(radians(euler[2])*(180/PI));
-  //box(20,20,500);
-  // RightThigh();
-   //LeftThigh();
   popMatrix();
   
 }

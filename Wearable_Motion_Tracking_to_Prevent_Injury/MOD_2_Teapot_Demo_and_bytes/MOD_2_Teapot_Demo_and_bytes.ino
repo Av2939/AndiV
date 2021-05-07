@@ -1,18 +1,19 @@
+//This code is for Mod 2 (Spine), the MAC Address for this ESP-32 is 84:CC:A8:12:30:5C
+
+
 #include "I2Cdev.h"
 #include <esp_now.h>
 #include <WiFi.h>
 #include "BluetoothSerial.h"
 #include "MPU6050_6Axis_MotionApps_V6_12.h"
+#include "Wire.h"
 
 #if !defined(CONFIG_BT_ENABLED) || !defined(CONFIG_BLUEDROID_ENABLED)
 #error Bluetooth is not enabled! Please run `make menuconfig` to and enable it
 #endif
+
+
 int analogPin = A13;
-
-
-#if I2CDEV_IMPLEMENTATION == I2CDEV_ARDUINO_WIRE
-#include "Wire.h"
-#endif
 uint8_t broadcastAddress[] = {0x7C, 0x9E, 0xBD, 0xD3, 0x02, 0xC4};
 
 typedef struct struct_message {
@@ -27,15 +28,20 @@ typedef struct struct_Message {
 } struct_Message;
 
 
-// Create a struct_message called myData
+// Creates a struct_message called myData that recieves data from Mod 1 (Thigh)
 struct_message myData;
 
+//This struct sends data to Mod 1 (Spine), this is to activate the Buzzer and LED
 struct_Message sendData;
 
-uint8_t Combined[19];
-char val;
-char batt;
-char BATT;
+
+uint8_t Combined[19]; //The data pactet that is sent over BT to Processing
+
+char val; //To control the LED and Buzzer for both modules 
+
+char batt; //Battery values for Mod 2
+char BATT; //Battery values for Mod 1
+
 // callback function that will be executed when data is received
 void OnDataRecv(const uint8_t * mac, const uint8_t *incomingData, int len) {
   memcpy(&myData, incomingData, sizeof(myData));
@@ -45,7 +51,6 @@ MPU6050 mpu;
 #define OUTPUT_TEAPOT
 
 #define INTERRUPT_PIN 2  // use pin 2 on Arduino Uno & most boards
-#define LED_PIN 13 // (Arduino is 13, Teensy is 11, Teensy++ is 6)
 bool blinkState = false;
 
 // MPU control/status vars
@@ -66,7 +71,7 @@ VectorFloat gravity;    // [x, y, z]            gravity vector
 float euler[3];         // [psi, theta, phi]    Euler angle container
 float ypr[3];           // [yaw, pitch, roll]   yaw/pitch/roll container and gravity vector
 
-// packet structure for InvenSense teapot demo
+// packet structure for InvenSense teapot demo in other words, Module 2
 uint8_t teapotPacket[14] = { '$', 0x02, 0, 0, 0, 0, 0, 0, 0, 0, 0x00, 0x00, '\r', '\n' };
 
 
@@ -82,8 +87,9 @@ void dmpDataReady() {
 BluetoothSerial ESP_BT; //Initalized BT that will be connect the whole system to a Bluetooth serial monitor.
 void setup() {
   //----------------WIFI and BT initalizng stuff--------------------------------
-  pinMode(32, OUTPUT);
-Serial.begin(57600);
+  
+  pinMode(32, OUTPUT); //pin for onboard led on ESP-32
+
    // Set device as a Wi-Fi Station
   WiFi.mode(WIFI_STA);
 
@@ -91,13 +97,8 @@ Serial.begin(57600);
   if (esp_now_init() != ESP_OK) {
     return;
   }
-// Once ESPNow is successfully Init, we will register for Send CB to
-  // get the status of Trasnmitted packet
- 
-  
-  // Once ESPNow is successfully Init, we will register for recv CB to
-  // get recv packer info
-  esp_now_register_recv_cb(OnDataRecv);
+
+  esp_now_register_recv_cb(OnDataRecv); //function that is activated when data is recieved, not used for this project
 
     // Register peer
   esp_now_peer_info_t peerInfo;
@@ -119,9 +120,7 @@ ESP_BT.begin("Yeet");
   Fastwire::setup(400, true);
 #endif
 
-  // initialize serial communication
-  // (115200 chosen because it is required for Teapot Demo output, but it's
-  // really up to you depending on your project)
+ 
   Serial.begin(115200);
   //while (!Serial); // wait for Leonardo enumeration, others continue immediately
 
@@ -135,13 +134,7 @@ ESP_BT.begin("Yeet");
   // verify connection
   Serial.println(F("Testing device connections..."));
   Serial.println(mpu.testConnection() ? F("MPU6050 connection successful") : F("MPU6050 connection failed"));
-/*
-  // wait for ready
-  Serial.println(F("\nSend any character to begin DMP programming and demo: "));
-  while (Serial.available() && Serial.read()); // empty buffer
-  while (!Serial.available());                 // wait for data
-  while (Serial.available() && Serial.read()); // empty buffer again
-*/
+
   // load and configure the DMP
   Serial.println(F("Initializing DMP..."));
   devStatus = mpu.dmpInitialize();
@@ -178,10 +171,7 @@ ESP_BT.begin("Yeet");
     // get expected DMP packet size for later comparison
     packetSize = mpu.dmpGetFIFOPacketSize();
   } else {
-    // ERROR!
-    // 1 = initial memory load failed
-    // 2 = DMP configuration updates failed
-    // (if it's going to break, usually the code will be 1)
+    
     Serial.print(F("DMP Initialization failed (code "));
     Serial.print(devStatus);
     Serial.println(F(")"));
@@ -194,8 +184,6 @@ ESP_BT.begin("Yeet");
 }
 void loop() {
       
-      //battery stuff
-      //batt= ((( 3.30f * float(analogRead(analogPin)) / 2047.0f))*100);  // LiPo battery
 
 //Module 2      
 if (analogRead(analogPin) > 2397){
@@ -270,48 +258,15 @@ if ((myData.BATT) < 1900){
 Serial.println(myData.BATT);
       
       
- // if programming failed, don't try to do anything
-  //if (!dmpReady) return;
-  // read a packet from FIFO
+ /
   if (mpu.dmpGetCurrentFIFOPacket(fifoBuffer)) { // Get the Latest packet 
-//Serial.write(myData.teapotPacket, 14);
+
 
     #ifdef OUTPUT_TEAPOT
-    // display quaternion values in InvenSense Teapot demo format:
-    teapotPacket[2] = fifoBuffer[0];
-    teapotPacket[3] = fifoBuffer[1];
-    teapotPacket[4] = fifoBuffer[4];
-    teapotPacket[5] = fifoBuffer[5];
-    teapotPacket[6] = fifoBuffer[8];
-    teapotPacket[7] = fifoBuffer[9];
-    teapotPacket[8] = fifoBuffer[12];
-    teapotPacket[9] = fifoBuffer[13];
-    
-    //Serial.write(teapotPacket, 14);
-    //teapotPacket[11]++; // packetCount, loops at 0xFF on purpose
-    
-   // Serial.write(myData.teapotPacket,14);
-    
-    
-    
-    
-    //Serial.print("COMBINED:");
- 
    
-    //Serial.println();
-    
-    //Serial.println();
-
-
-//ESP_BT.write(myData.teapotPacket, 14);
-
-//ESP_BT.write(teapotPacket, 14);
-
-//ESP_BT.write(Combined, 28);
-    
 #endif
- //Combined[14] = myData.teapotPacket[0];
- //Combined[15] = myData.teapotPacket[1];
+// At this point we are taking the motion data from Mod 1 that was transmiteed through ESP-NOW
+//and copying it into the byte array that will be transmitted through BT
  Combined[9] = myData.teapotPacket[0];
  Combined[10] = myData.teapotPacket[1];
  Combined[11] = myData.teapotPacket[2];
@@ -320,16 +275,12 @@ Serial.println(myData.BATT);
  Combined[14] = myData.teapotPacket[5];
  Combined[15] = myData.teapotPacket[6];
  Combined[16] = myData.teapotPacket[7];
- //Combined[24] = myData.teapotPacket[10];
- //Combined[25] = myData.teapotPacket[11];
- //Combined[26] = myData.teapotPacket[12];
- //Combined[27] = myData.teapotPacket[13];
+
  
- 
- 
+ //In this section we are copying the local motion data from Mod 2 and putting it into the 
+ //packet byte array that will be transmitted through BT
  
  Combined[0] = teapotPacket[0];
- //Combined[1] = teapotPacket[1];
  Combined[1] = teapotPacket[2];
  Combined[2] = teapotPacket[3];
  Combined[3] = teapotPacket[4];
@@ -338,27 +289,23 @@ Serial.println(myData.BATT);
  Combined[6] = teapotPacket[7];
  Combined[7] = teapotPacket[8];
  Combined[8] = teapotPacket[9];
- //Combined[10] = teapotPacket[10];
- //Combined[11] = teapotPacket[11];
- //Combined[12] = teapotPacket[12];
- //Combined[13] = teapotPacket[13];
 
- 
+ //This is where the battery percentages of the system get copyed onto the packet byte array that 
+ //will get sent to processing over BT
  Combined[17] = batt;
  Combined[18] = BATT;
-    // blink LED to indicate activity
-    //blinkState = !blinkState;
-    //digitalWrite(LED_PIN, blinkState);
+
     
   }
 
 
 
 ESP_BT.write(Combined, 19); //write to bluetooth serial   -----------------
-//Serial.write(Combined, 28);//write to usb serial from module 2
-//Serial.println(ESP_BT.read());
-val = ESP_BT.read();
-sendData.control = val;
+
+val = ESP_BT.read(); //Reads any incoming data from processing, which allows processing to 
+//send data i.e a button click, which the system will read and perform an action
+
+sendData.control = val; //This will send any incoming data from processing to Mod 1
 
 if (val=='1'){
 
@@ -375,6 +322,7 @@ if (val=='2'){
 else{
   digitalWrite(13, LOW);
 }
+//sends data to Mod 1, in this case its the button clicks from processing i.e buzzer
 esp_err_t result = esp_now_send(broadcastAddress, (uint8_t *) &sendData, sizeof(sendData));
   delay(25);
 }

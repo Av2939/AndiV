@@ -3,9 +3,7 @@ void serialEvent(Serial port) {
     interval = millis();
     while (port.available() > 0) {
         int ch = port.read();
-         //print((char)ch);
-        // DA - Added this next if statement because we seem to be getting 
-        //  off byte boundary with initialization warnings
+        
         if(!gotFirstDataByte) {
           if (ch == '$') {
             gotFirstDataByte = true;
@@ -15,24 +13,7 @@ void serialEvent(Serial port) {
         }
         
         
-        //println("Char: " + (char)ch);
-        //println((char)ch + " " + aligned + " " + serialCount);
-      /*  if (aligned < 4) {
-            // make sure we are properly aligned on a 14-byte packet
-            if (serialCount == 0) {
-                if (ch == '$') aligned++; else aligned = 0;
-            } else if (serialCount == 1) {
-                if (ch == 2) aligned++; else aligned = 0;
-            } else if (serialCount == 12) {
-                if (ch == '\r') aligned++; else aligned = 0;
-            } else if (serialCount == 13) {
-                if (ch == '\n') aligned++; else aligned = 0;
-            }
-            //println((char)ch + " " + aligned + " " + serialCount);
-            serialCount++;
-            if (serialCount == 30) serialCount = 0;
-             //println(serialCount);
-        } else {*/
+    
             if (serialCount > 0 || ch == '$') {
                 teapotPacket[serialCount++] = (char)ch;
                 if (serialCount == 19) {
@@ -144,9 +125,7 @@ void serialEvent(Serial port) {
                   
                 
                
-                   // println(batt);
-                    
-                    // below calculations unnecessary for orientation only using toxilibs
+                   
                     
                     // calculate gravity vector
                     gravity[0] = 2 * (q[1]*q[3] - q[0]*q[2]);
@@ -179,15 +158,8 @@ void serialEvent(Serial port) {
                     YPR[2] = (atan(GRAVITY[1] / sqrt(GRAVITY[0]*GRAVITY[0] + GRAVITY[2]*GRAVITY[2])))*180/PI;
                  
                     
-                    
-                    
-                    // output various components for debugging
-                    //println("q:\t" + round(q[0]*100.0f)/100.0f + "\t" + round(q[1]*100.0f)/100.0f + "\t" + round(q[2]*100.0f)/100.0f + "\t" + round(q[3]*100.0f)/100.0f);
-                    //println("euler:\t" + euler[0]*180.0f/PI + "\t" + euler[1]*180.0f/PI + "\t" + euler[2]*180.0f/PI);
-                    //println("ypr:\t" + ypr[0]*180.0f/PI + "\t" + ypr[1]*180.0f/PI + "\t" + ypr[2]*180.0f/PI);
-                    
                 }
-            //}
+            
         }
     }
 }
