@@ -9,7 +9,7 @@
 <br>
 Based on a research paper, my team and I built wearable modules consisting of an IMU (MPU 6050) and an ESP-32 (microcontroller) that sent precise motion data over Bluetooth in the form of quaternions in real time (40 Samples/s). 
   
-  To utilize this Data, we built a user interface in Java (Processing) that allowed the user to view, record, and visualize this data with a 3D wireframe skeleton..
+  To utilize this Data, we built a user interface in Java (Processing) that allowed the user to view, record, and visualize this data with a 3D wireframe skeleton.
 </details>
 
 <details>
