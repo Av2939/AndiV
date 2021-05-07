@@ -12,17 +12,7 @@ Based on a research paper, my team and I built wearable modules consisting of an
   To utilize this Data, we built a user interface in Java (Processing) that allowed the user to view, record, and visualize this data with a 3D wireframe skeleton.
 </details>
 
-<details>
-<summary>Software</summary>
-<br>
-This is how you dropdown.
-</details>
 
-<details>
-<summary>Hardware</summary>
-<br>
-This is how you dropdown.
-</details>
 
 
 
@@ -38,17 +28,7 @@ A smart home device that uses a natural gas sensor and an ESP-32 (microcontrolle
 The notification system is facilitated through an internet-based API (BLYNK) which allows Gas Alert to notify the user anywhere there is an internet connection available.
 </details>
 
-<details>
-<summary>Software</summary>
-<br>
-This is how you dropdown.
-</details>
 
-<details>
-<summary>Hardware</summary>
-<br>
-This is how you dropdown.
-</details>
 
 
 ## Smart Night Stand Lamp
@@ -63,14 +43,4 @@ A reprogrammable nightstand lamp that is built upon the open sourced WLED reposi
 The lamp has a power design that allows one USB type-c port to facilitate the power needs of the lamp, as well as fast charge a smart phone and a laptop simultaneously.
 </details>
 
-<details>
-<summary>Software</summary>
-<br>
-This is how you dropdown.
-</details>
 
-<details>
-<summary>Hardware</summary>
-<br>
-This is how you dropdown.
-</details>
