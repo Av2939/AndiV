@@ -20,13 +20,12 @@ Based on a research paper, my team and I built wearable modules consisting of an
 
 <img src="README_Images/gas_alert.PNG" width ="500" > <img src="README_Images/notification.PNG" width ="300" >
 
-<details open>
-<summary>Description</summary>
+
 <br>
 A smart home device that uses a natural gas sensor and an ESP-32 (microcontroller) to alert a user on a smartphone that there is a gas leak present.
 
 The notification system is facilitated through an internet-based API (BLYNK) which allows Gas Alert to notify the user anywhere there is an internet connection available.
-</details>
+
 
 
 
