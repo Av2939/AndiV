@@ -4,7 +4,7 @@
 Recent project done using React JS for the front-end and Firebase to serve as a backend for authentication and database.
 
  
-
+ <img src="README_Images/scrolling_landing_page.gif" width ="1000" >
  <img src="README_Images/Reminders_landscape.png" width ="1000" >
  <img src="README_Images/notes.png" width ="1000" >
 
