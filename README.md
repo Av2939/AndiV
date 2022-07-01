@@ -1,7 +1,7 @@
 # Andi_V-Projects
 
 ## To-Done
-Recent project done using React JS for the front-end and Firebase to serve as a backend for authentication and databse.
+Recent project done using React JS for the front-end and Firebase to serve as a backend for authentication and database.
 
 
 
