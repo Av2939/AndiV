@@ -3,6 +3,9 @@
 ## To-Done
 Recent project done using React JS for the front-end and Firebase to serve as a backend for authentication and database.
 
+<img src="README_Images/modules.PNG" width ="500" > <img src="README_Images/notes.png" width ="500" >
+
+<img src="README_Images/modules.PNG" width ="500" > <img src="README_Images/Reminders_landscape.png" width ="500" >
 
 
 ## Wearable Motion Tracking to Prevent Injury
