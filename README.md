@@ -5,6 +5,10 @@ Recent project done using React JS for the front-end and Firebase to serve as a 
 
  
  <img src="README_Images/scrolling_landing_page.gif" width ="1000" >
+ 
+After the user has been authenticated either through Google Sign In or Email, the firestore database will associate the user's uid with their notes/reminders.
+Note: There is an option to log in anonymously if you want to check out the reminders/notes portion of the page. However, any reminders/notes added will be deleted   after logging out.
+ 
  <img src="README_Images/Reminders_landscape.png" width ="1000" >
  <img src="README_Images/notes.png" width ="1000" >
 
