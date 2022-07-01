@@ -2,6 +2,7 @@
 
 ## To-Done
 Recent project done using React JS for the front-end and Firebase to serve as a backend for authentication and database.
+The site has been deployed for demo purposes: [https://to-done-bb4c7.web.app/](https://to-done-bb4c7.web.app/)
 
  
  <img src="README_Images/scrolling_landing_page.gif" width ="1000" >
